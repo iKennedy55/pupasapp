@@ -3,7 +3,7 @@ let state = {
     totalPeople: 1,
     currentPersonIndex: 1,
     orders: [], // [[{qty, type, dough}, ...]]
-    specialties: ["Revuelta", "Frijol con Queso", "Queso", "Chicharrón", "Ayote"],
+    specialties: ["Revuelta", "Frijol con Queso", "Queso sin Loroco", "Queso con Loroco", "Chicharrón", "Ayote", "Ajo", "Jamón", "Birria", "Camarón", "Pollo"],
     theme: localStorage.getItem("theme") || "light"
 };
 
