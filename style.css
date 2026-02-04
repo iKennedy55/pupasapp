@@ -70,10 +70,12 @@ body {
     max-width: 480px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 20px 40px;
+    padding: 20px 20px 40px;
+    /* Added top padding */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    /* Changed from center to flex-start */
 }
 
 /* Typography */
