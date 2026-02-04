@@ -416,3 +416,20 @@ h2 {
     border: none;
     cursor: pointer;
 }
+
+/* Footer */
+.app-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: auto;
+    /* Push to bottom */
+}
+
+.signature {
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    /* Give it a slight distinct look if loaded, otherwise fallback */
+    color: var(--accent);
+}
