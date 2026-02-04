@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pupusas Counter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <button id="btn-theme-toggle" class="icon-btn" aria-label="Cambiar tema">
+            <!-- Icons injected by JS -->
+        </button>
+        <button id="btn-open-settings" class="icon-btn" aria-label="Configurar especialidades">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                    d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                </path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+        </button>
+    </header>
+
+    <main class="container">
+        <!-- VISTA 1: CONFIGURACIÓN INICIAL -->
+        <section id="setup-view" class="view active">
+            <div class="content">
+                <h1>pupusas.beta</h1>
+                <p class="subtitle">Ordena simple. Ordena mejor.</p>
+
+                <div class="stepper-large">
+                    <button class="stepper-btn" onclick="adjustPeople(-1)">−</button>
+                    <span id="people-display">0</span>
+                    <button class="stepper-btn" onclick="adjustPeople(1)">+</button>
+                </div>
+                <p class="label-text">Personas</p>
+
+                <button id="btn-start" class="btn-primary">
+                    Comenzar
+                </button>
+            </div>
+        </section>
+
+        <!-- VISTA 2: TOMAR ORDEN -->
+        <section id="order-view" class="view hidden">
+            <div class="header-row">
+                <button id="btn-back-home" class="btn-text">← Salir</button>
+                <span id="progress-indicator" class="badge">1 / 5</span>
+            </div>
+
+            <h2 id="person-title">Persona 1</h2>
+
+            <div id="pupusas-list" class="pupusas-list">
+                <!-- Items dinámicos -->
+            </div>
+
+            <button id="btn-add-pupusa" class="btn-dashed">
+                + Agregar Variedad
+            </button>
+
+            <div class="bottom-actions">
+                <button id="btn-next" class="btn-primary full-width">
+                    Siguiente
+                </button>
+            </div>
+        </section>
+
+        <!-- VISTA 3: RESUMEN -->
+        <section id="summary-view" class="view hidden">
+            <div class="header-row">
+                <h2>Resumen</h2>
+            </div>
+
+            <div id="summary-list" class="summary-list">
+                <!-- Resumen dinámico -->
+            </div>
+
+            <div class="total-row">
+                <span>Total</span>
+                <span id="grand-total" class="big-number">0</span>
+            </div>
+
+            <button id="btn-restart" class="btn-primary full-width">
+                Nuevo Pedido
+            </button>
+        </section>
+
+        <!-- VISTA: AJUSTES (Especialidades) -->
+        <section id="settings-view" class="view hidden">
+            <div class="header-row">
+                <button id="btn-close-settings" class="btn-text">← Volver</button>
+                <h2>Ajustes</h2>
+            </div>
+
+            <div class="settings-content">
+                <h3>Especialidades</h3>
+                <div class="add-specialty-row">
+                    <input type="text" id="new-specialty-input" placeholder="Nueva especialidad...">
+                    <button id="btn-add-specialty" class="btn-small">Agregar</button>
+                </div>
+                <ul id="specialties-list">
+                    <!-- Lista dinámica -->
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- TEMPLATE PARA ITEM DE PUPUSA -->
+    <template id="pupusa-item-template">
+        <div class="pupusa-item slide-up">
+            <div class="row-top">
+                <div class="dropdown-wrapper">
+                    <select class="specialty-select">
+                        <!-- Opciones dinámicas -->
+                    </select>
+                    <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <button class="btn-remove" title="Eliminar">×</button>
+            </div>
+
+            <div class="row-bottom">
+                <div class="dough-toggle">
+                    <label>
+                        <input type="radio" name="dough-$ID$" value="Maíz" checked>
+                        <span>Maíz</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="dough-$ID$" value="Arroz">
+                        <span>Arroz</span>
+                    </label>
+                </div>
+
+                <div class="stepper-small">
+                    <button class="stepper-btn-sm minus">−</button>
+                    <input type="number" class="input-qty" value="1" readonly>
+                    <button class="stepper-btn-sm plus">+</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
