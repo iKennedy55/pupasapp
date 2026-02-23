@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pupusas.beta — Ordena simple. Ordena mejor.</title>
+    <meta name="description"
+        content="App minimalista para tomar pedidos de pupusas con precios, múltiples órdenes y resumen total.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="header-left">
+            <span class="app-logo">pupusas<span class="logo-dot">.</span>beta</span>
+        </div>
+        <div class="header-right">
+            <button id="btn-theme-toggle" class="icon-btn" aria-label="Cambiar tema"></button>
+            <button id="btn-open-settings" class="icon-btn" aria-label="Configurar especialidades">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                    </path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- VISTA 1: HOME con historial de órdenes -->
+        <section id="home-view" class="view active">
+            <div class="home-top">
+                <h1>Ordena simple.<br>Ordena mejor.</h1>
+                <p class="subtitle">Tus pedidos, organizados.</p>
+            </div>
+
+            <button id="btn-new-order" class="btn-primary full-width new-order-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Nueva Orden
+            </button>
+
+            <div id="orders-history-section" class="orders-history-section hidden">
+                <h3 class="section-label">Órdenes guardadas</h3>
+                <div id="orders-history-list" class="orders-history-list">
+                    <!-- Dynamic -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: NOMBRE DE LA ORDEN -->
+        <section id="name-view" class="view hidden">
+            <div class="header-row">
+                <button class="btn-text" onclick="goHome()">← Volver</button>
+            </div>
+            <div class="name-view-content">
+                <h2>Nueva Orden</h2>
+                <p class="subtitle">Dale un nombre para identificarla fácilmente.</p>
+                <input type="text" id="order-name-input" class="order-name-input" placeholder="Ej: Mesa 1, Almuerzo..."
+                    maxlength="30">
+                <div id="people-section">
+                    <p class="label-text">¿Cuántas personas?</p>
+                    <div class="stepper-large">
+                        <button class="stepper-btn" onclick="adjustPeople(-1)">−</button>
+                        <span id="people-display">1</span>
+                        <button class="stepper-btn" onclick="adjustPeople(1)">+</button>
+                    </div>
+                </div>
+                <button id="btn-start" class="btn-primary full-width">Comenzar →</button>
+            </div>
+        </section>
+
+        <!-- VISTA 2: TOMAR ORDEN -->
+        <section id="order-view" class="view hidden">
+            <div class="header-row">
+                <button id="btn-back-home" class="btn-text">← Salir</button>
+                <span id="progress-indicator" class="badge">1 / 5</span>
+            </div>
+
+            <div class="person-header">
+                <h2 id="person-title">Persona 1</h2>
+                <button id="btn-edit-name" class="btn-edit-person" title="Renombrar persona">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="pupusas-list" class="pupusas-list">
+                <!-- Items dinámicos -->
+            </div>
+
+            <button id="btn-add-pupusa" class="btn-dashed">
+                + Agregar Variedad
+            </button>
+
+            <div class="note-section">
+                <textarea id="person-note" class="person-note-input" placeholder="Nota especial (opcional)..."
+                    rows="2"></textarea>
+            </div>
+
+            <div class="bottom-actions">
+                <button id="btn-prev" class="btn-secondary" style="display:none;">← Anterior</button>
+                <button id="btn-next" class="btn-primary flex-1">Siguiente →</button>
+            </div>
+        </section>
+
+        <!-- VISTA 3: RESUMEN -->
+        <section id="summary-view" class="view hidden">
+            <div class="header-row">
+                <button id="btn-back-to-order" class="btn-text">← Editar</button>
+                <h2 id="summary-order-title">Resumen</h2>
+            </div>
+
+            <!-- Resumen por persona -->
+            <div id="summary-by-person" class="summary-by-person"></div>
+
+            <div class="summary-divider"></div>
+
+            <!-- Totales generales -->
+            <div id="summary-totals" class="summary-totals"></div>
+
+            <div class="total-row grand-total-row">
+                <span class="total-label">Total Pupusas</span>
+                <span id="grand-total" class="big-number">0</span>
+            </div>
+            <div class="total-row money-total-row" id="money-total-row" style="display:none;">
+                <span class="total-label">Total Estimado</span>
+                <span id="grand-money" class="big-number money-big">$0.00</span>
+            </div>
+
+            <div class="summary-actions">
+                <button id="btn-copy-summary" class="btn-secondary full-width">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copiar Resumen
+                </button>
+                <button id="btn-save-order" class="btn-primary full-width">
+                    Guardar Orden
+                </button>
+            </div>
+        </section>
+
+        <!-- VISTA: AJUSTES -->
+        <section id="settings-view" class="view hidden">
+            <div class="header-row">
+                <button id="btn-close-settings" class="btn-text">← Volver</button>
+                <h2>Ajustes</h2>
+            </div>
+
+            <div class="settings-content">
+                <h3 class="section-label">Especialidades y Precios</h3>
+                <div class="add-specialty-row">
+                    <input type="text" id="new-specialty-input" placeholder="Nueva especialidad..." maxlength="40">
+                    <input type="number" id="new-specialty-price" placeholder="$ precio" min="0" step="0.25"
+                        style="width:100px;">
+                    <button id="btn-add-specialty" class="btn-small">Agregar</button>
+                </div>
+                <ul id="specialties-list">
+                    <!-- Lista dinámica -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- VISTA: VER ORDEN GUARDADA -->
+        <section id="saved-order-view" class="view hidden">
+            <div class="header-row">
+                <button onclick="goHome()" class="btn-text">← Volver</button>
+                <div class="saved-order-actions">
+                    <button id="btn-delete-saved" class="btn-danger-sm" title="Eliminar orden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                            <path d="M10 11v6"></path>
+                            <path d="M14 11v6"></path>
+                            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <h2 id="saved-order-title">Orden</h2>
+            <p id="saved-order-date" class="saved-order-date"></p>
+            <div id="saved-order-content" class="saved-order-content"></div>
+        </section>
+
+    </main>
+
+    <!-- TEMPLATE PARA ITEM DE PUPUSA -->
+    <template id="pupusa-item-template">
+        <div class="pupusa-item slide-up">
+            <div class="row-top">
+                <div class="dropdown-wrapper">
+                    <select class="specialty-select">
+                        <!-- Opciones dinámicas -->
+                    </select>
+                    <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <button class="btn-remove" title="Eliminar">×</button>
+            </div>
+
+            <div class="row-bottom">
+                <div class="dough-toggle">
+                    <label>
+                        <input type="radio" name="dough-$ID$" value="Arroz" checked>
+                        <span>Arroz</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="dough-$ID$" value="Maíz">
+                        <span>Maíz</span>
+                    </label>
+                </div>
+
+                <div class="stepper-small">
+                    <button class="stepper-btn-sm minus">−</button>
+                    <input type="number" class="input-qty" value="1" readonly>
+                    <button class="stepper-btn-sm plus">+</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- MODAL: EDITAR NOMBRE DE PERSONA -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal-card">
+            <p class="modal-title">Nombre de la persona</p>
+            <input type="text" id="modal-name-input" class="modal-input" placeholder="Ej: Kevin, Mesa A..."
+                maxlength="25">
+            <div class="modal-actions">
+                <button id="modal-cancel" class="btn-text">Cancelar</button>
+                <button id="modal-confirm" class="btn-small">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast hidden"></div>
+
+    <footer class="app-footer">
+        <p>Creado por <span class="signature">Kevin Bonifacio</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
