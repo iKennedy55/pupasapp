@@ -148,6 +148,9 @@
     cursor: pointer;
     padding: 4px 0;
     transition: color var(--transition), text-shadow var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .btn-text:hover {

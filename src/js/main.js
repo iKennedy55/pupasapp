@@ -1,6 +1,3 @@
-// ============================================================
-// STATE
-// ============================================================
 const DEFAULT_SPECIALTIES = [
     { name: "Revuelta", price: 1.25 },
     { name: "Frijol con Queso", price: 1.25 },
@@ -59,9 +56,6 @@ function persistSavedOrders() {
     localStorage.setItem("savedOrders", JSON.stringify(state.savedOrders));
 }
 
-// ============================================================
-// DOM REFS
-// ============================================================
 const views = {
     home: document.getElementById("home-view"),
     name: document.getElementById("name-view"),
@@ -117,9 +111,6 @@ const templates = {
     pupusaItem: document.getElementById("pupusa-item-template"),
 };
 
-// ============================================================
-// VIEWS & NAVIGATION
-// ============================================================
 let _currentView = "home";
 
 function currentViewName() {
@@ -155,9 +146,6 @@ window.adjustPeople = function (delta) {
     ui.peopleDisplay.textContent = val;
 };
 
-// ============================================================
-// TOAST
-// ============================================================
 let _toastTimeout;
 function showToast(msg) {
     clearTimeout(_toastTimeout);
@@ -170,9 +158,6 @@ function showToast(msg) {
     }, 2200);
 }
 
-// ============================================================
-// ORDER FLOW
-// ============================================================
 function startOrder() {
     const name = ui.orderNameInput.value.trim() || "Orden " + (state.savedOrders.length + 1);
     state.orderName = name;
@@ -193,7 +178,8 @@ function setupPersonView(restore = false) {
     ui.progressIndicator.textContent = `${state.currentPersonIndex} / ${state.totalPeople}`;
 
     ui.btnPrev.style.display = state.currentPersonIndex > 1 ? "inline-flex" : "none";
-    ui.btnNext.textContent = state.currentPersonIndex < state.totalPeople ? "Siguiente ->" : "Ver Resumen ->";
+    const iconRight = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+    ui.btnNext.innerHTML = state.currentPersonIndex < state.totalPeople ? `Siguiente ${iconRight}` : `Ver Resumen ${iconRight}`;
 
     ui.personNote.value = state.personNotes[idx] || "";
 
@@ -334,9 +320,6 @@ function editSavedOrder(index) {
     switchView("order");
 }
 
-// ============================================================
-// SUMMARY
-// ============================================================
 function calcPersonSubtotal(personOrder) {
     let subtotal = 0;
     let hasPrice = false;
@@ -684,9 +667,6 @@ function renderOrdersHistory() {
     });
 }
 
-// ============================================================
-// SETTINGS
-// ============================================================
 function addSpecialty() {
     const name = ui.newSpecialtyInput.value.trim();
     const price = parseFloat(ui.newSpecialtyPrice.value) || 0;
@@ -744,9 +724,6 @@ function renderSpecialtiesList() {
     });
 }
 
-// ============================================================
-// INIT
-// ============================================================
 function init() {
     renderSpecialtiesList();
     renderOrdersHistory();
