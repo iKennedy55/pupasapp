@@ -204,7 +204,6 @@ function init() {
 // VIEW UTILS
 // ============================================================
 let _currentView = "home";
-let _switchId = 0;
 
 function currentViewName() {
     return _currentView;
@@ -212,26 +211,15 @@ function currentViewName() {
 
 function switchView(viewName) {
     _currentView = viewName;
-    const id = ++_switchId;
-
-    // Immediately hide all views
-    Object.values(views).forEach(el => {
-        el.classList.remove("active");
-        el.classList.add("hidden");
-    });
-
-    // Double rAF to ensure the browser has painted the hidden state
-    requestAnimationFrame(() => {
-        if (id !== _switchId) return; // stale call, skip
-        requestAnimationFrame(() => {
-            if (id !== _switchId) return; // stale call, skip
-            const target = views[viewName];
-            if (!target) return;
-            target.classList.remove("hidden");
-            // Force reflow so the transition from opacity:0 actually runs
-            void target.offsetWidth;
-            target.classList.add("active");
-        });
+    Object.keys(views).forEach(name => {
+        const el = views[name];
+        if (name === viewName) {
+            el.classList.remove("hidden");
+            el.classList.add("active");
+        } else {
+            el.classList.remove("active");
+            el.classList.add("hidden");
+        }
     });
 }
 
