@@ -19,7 +19,7 @@ const DEFAULT_SPECIALTIES = [
 ];
 
 let state = {
-    theme: localStorage.getItem("theme") || "light",
+    theme: "dark",
     specialties: loadSpecialties(),
 
     // Current session
@@ -466,7 +466,7 @@ function renderSummary() {
         if (note) {
             const noteEl = document.createElement("p");
             noteEl.className = "summary-note";
-            noteEl.innerHTML = `📝 ${note}`;
+            noteEl.innerHTML = `Nota: ${note}`;
             section.appendChild(noteEl);
         }
 
@@ -529,8 +529,8 @@ function renderSummary() {
 // COPY SUMMARY
 // ============================================================
 function copySummaryToClipboard() {
-    let text = `🫓 ${state.orderName}\n`;
-    text += `${"─".repeat(25)}\n`;
+    let text = `${state.orderName}\n`;
+    text += `${"-".repeat(25)}\n`;
 
     let grandTotal = 0;
     let grandMoney = 0;
@@ -542,8 +542,8 @@ function copySummaryToClipboard() {
 
         const { subtotal, hasPrice } = calcPersonSubtotal(personOrder);
         const personLabel = hasPrice
-            ? `👤 ${state.personNames[idx]} — $${subtotal.toFixed(2)}`
-            : `👤 ${state.personNames[idx]}`;
+            ? `${state.personNames[idx]} - $${subtotal.toFixed(2)}`
+            : `${state.personNames[idx]}`;
 
         text += `\n${personLabel}\n`;
         personOrder.forEach(item => {
@@ -556,17 +556,17 @@ function copySummaryToClipboard() {
             grandTotal += item.qty;
             if (sp && sp.price > 0) { grandMoney += sp.price * item.qty; hasPrices = true; }
         });
-        if (state.personNotes[idx]) text += `  📝 ${state.personNotes[idx]}\n`;
+        if (state.personNotes[idx]) text += `  Nota: ${state.personNotes[idx]}\n`;
     });
 
-    text += `\n${"─".repeat(25)}\n`;
-    text += `📦 Totales:\n`;
+    text += `\n${"-".repeat(25)}\n`;
+    text += `Totales:\n`;
     Object.keys(totals).sort().forEach(key => { text += `  • ${totals[key]}x ${key}\n`; });
     text += `\nTotal: ${grandTotal} pupusas`;
-    if (hasPrices) text += ` — $${grandMoney.toFixed(2)} total`;
+    if (hasPrices) text += ` - $${grandMoney.toFixed(2)} total`;
 
     navigator.clipboard.writeText(text).then(() => {
-        showToast("✓ Copiado al portapapeles");
+        showToast("Copiado al portapapeles");
     }).catch(() => {
         showToast("No se pudo copiar");
     });
@@ -588,10 +588,10 @@ function saveOrder() {
 
     if (state.sessionMode === 'edit' && state.editingOrderIndex !== null) {
         state.savedOrders[state.editingOrderIndex] = orderData;
-        showToast("✓ Orden actualizada");
+        showToast("Orden actualizada");
     } else {
         state.savedOrders.unshift(orderData);
-        showToast("✓ Orden guardada");
+        showToast("Orden guardada");
     }
 
     persistSavedOrders();
@@ -689,7 +689,7 @@ function viewSavedOrder(index) {
         if (note) {
             const noteEl = document.createElement("p");
             noteEl.className = "summary-note";
-            noteEl.innerHTML = `📝 ${note}`;
+            noteEl.innerHTML = `Nota: ${note}`;
             section.appendChild(noteEl);
         }
 
@@ -794,7 +794,7 @@ function addSpecialty() {
         ui.newSpecialtyPrice.value = "";
         saveSpecialties();
         renderSpecialtiesList();
-        showToast("✓ Especialidad agregada");
+        showToast("Especialidad agregada");
     } else if (!name) {
         showToast("Escribe un nombre");
     } else {

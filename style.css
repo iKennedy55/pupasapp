@@ -1,46 +1,31 @@
 /* ============================================================
-   DESIGN TOKENS
+   DESIGN TOKENS - OLED NEON
    ============================================================ */
 :root {
-    --bg-primary: #f5f5f0;
-    --bg-card: #ffffff;
-    --bg-card2: #fafaf8;
-    --text-primary: #111111;
-    --text-secondary: #888888;
-    --text-tertiary: #bbbbbb;
-    --accent: #111111;
-    --accent-hover: #333333;
-    --border: #e8e8e4;
-    --border-light: #f0f0ec;
-    --input-bg: #f0f0ec;
-    --success: #10b981;
-    --danger: #ef4444;
-    --danger-light: #fef2f2;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
-    --radius-sm: 10px;
-    --radius-md: 16px;
-    --radius-lg: 20px;
-    --radius-pill: 50px;
-    --transition: 0.2s ease;
-}
-
-[data-theme="dark"] {
-    --bg-primary: #111111;
-    --bg-card: #1c1c1c;
-    --bg-card2: #181818;
-    --text-primary: #f0f0f0;
+    --ink: #e0e0e0;
+    --muted: #888888;
+    --border: #1a1a1a;
+    --bg: #000000;
+    --card: #000000;
+    --card-hover: #080808;
+    --input-bg: #0a0a0a;
+    --text-primary: #e0e0e0;
     --text-secondary: #888888;
     --text-tertiary: #555555;
-    --accent: #f0f0f0;
-    --accent-hover: #cccccc;
-    --border: #2a2a2a;
-    --border-light: #222222;
-    --input-bg: #222222;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --ok: #00ff5b;
+    --warn: #ffea00;
+    --error: #ff003c;
+    --danger: #ff003c;
+    --accent: #00e1ff;
+    --accent-glow: rgba(0, 225, 255, 0.6);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 50px;
+    --transition: 0.2s ease;
 }
 
 /* ============================================================
@@ -54,6 +39,7 @@
     padding: 0;
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 html {
@@ -62,9 +48,8 @@ html {
 }
 
 body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--bg);
+    color: var(--ink);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -81,8 +66,8 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-light);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
     transition: border-color 0.3s;
 }
 
@@ -95,11 +80,11 @@ body {
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: -0.5px;
-    color: var(--text-primary);
+    color: #fff;
 }
 
 .logo-dot {
-    color: var(--text-secondary);
+    color: var(--accent);
 }
 
 .header-right {
@@ -109,12 +94,12 @@ body {
 
 .icon-btn {
     background: transparent;
-    border: none;
-    color: var(--text-primary);
+    border: 1px solid var(--border);
+    color: var(--ink);
     cursor: pointer;
     padding: 8px;
     border-radius: var(--radius-sm);
-    transition: background var(--transition);
+    transition: all var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -122,7 +107,10 @@ body {
 }
 
 .icon-btn:hover {
-    background: var(--input-bg);
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
 }
 
 /* ============================================================
@@ -145,37 +133,40 @@ h1 {
     letter-spacing: -1.5px;
     line-height: 1.15;
     margin-bottom: 0.5rem;
+    color: #fff;
 }
 
 h2 {
     font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: -0.5px;
+    color: #fff;
 }
 
 h3 {
     font-size: 1rem;
     font-weight: 600;
+    color: #fff;
 }
 
 .subtitle {
-    color: var(--text-secondary);
+    color: var(--muted);
     font-size: 0.95rem;
     margin-bottom: 2rem;
 }
 
 .section-label {
     font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--text-secondary);
+    color: var(--accent);
     margin-bottom: 12px;
 }
 
 .label-text {
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: var(--muted);
     text-align: center;
     margin-bottom: 1rem;
 }
@@ -226,7 +217,7 @@ h3 {
 }
 
 .order-history-card {
-    background: var(--bg-card);
+    background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 16px 18px;
@@ -235,13 +226,12 @@ h3 {
     gap: 12px;
     cursor: pointer;
     transition: all var(--transition);
-    box-shadow: var(--shadow-sm);
 }
 
 .order-history-card:hover {
-    border-color: var(--text-primary);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
+    background: var(--card-hover);
+    border-color: #333;
+    box-shadow: 0 0 12px rgba(0, 225, 255, 0.1);
 }
 
 .order-history-info {
@@ -255,12 +245,12 @@ h3 {
 .order-history-name {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: #fff;
 }
 
 .order-history-meta {
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: var(--muted);
 }
 
 .order-history-date {
@@ -270,8 +260,8 @@ h3 {
 
 .btn-edit-order {
     background: var(--input-bg);
-    border: none;
-    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    color: var(--muted);
     cursor: pointer;
     padding: 8px;
     border-radius: var(--radius-sm);
@@ -281,8 +271,10 @@ h3 {
 }
 
 .btn-edit-order:hover {
-    background: var(--border);
-    color: var(--text-primary);
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 /* ============================================================
@@ -299,19 +291,20 @@ h3 {
 .order-name-input {
     width: 100%;
     padding: 14px 16px;
-    background: var(--bg-card);
+    background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    color: var(--text-primary);
+    color: #fff;
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 28px;
-    transition: border-color var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .order-name-input:focus {
     outline: none;
-    border-color: var(--text-primary);
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
 }
 
 #people-section {
@@ -319,7 +312,7 @@ h3 {
 }
 
 /* ============================================================
-   STEPPER (LARGE — PERSONA COUNT)
+   STEPPER (LARGE - PERSONA COUNT)
    ============================================================ */
 .stepper-large {
     display: flex;
@@ -333,9 +326,9 @@ h3 {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    border: 1.5px solid var(--border);
-    background: var(--bg-card);
-    color: var(--text-primary);
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: #fff;
     font-size: 1.5rem;
     cursor: pointer;
     display: flex;
@@ -346,7 +339,10 @@ h3 {
 }
 
 .stepper-btn:hover {
-    border-color: var(--text-primary);
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
 }
 
 #people-display {
@@ -356,31 +352,37 @@ h3 {
     text-align: center;
     font-variant-numeric: tabular-nums;
     letter-spacing: -2px;
+    color: #fff;
 }
 
 /* ============================================================
    BUTTONS
    ============================================================ */
 .btn-primary {
-    background-color: var(--text-primary);
-    color: var(--bg-primary);
-    border: none;
+    background-color: var(--accent);
+    color: #000;
+    border: 1px solid var(--accent);
     padding: 15px 28px;
-    border-radius: var(--radius-pill);
-    font-weight: 600;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
     font-size: 0.95rem;
     cursor: pointer;
     margin-top: 1.5rem;
-    transition: transform 0.15s, opacity 0.15s, background 0.2s;
+    transition: all 0.2s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    letter-spacing: -0.2px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 0 16px var(--accent-glow);
 }
 
 .btn-primary:hover {
-    opacity: 0.88;
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 .btn-primary:active {
@@ -388,11 +390,11 @@ h3 {
 }
 
 .btn-secondary {
-    background-color: var(--input-bg);
-    color: var(--text-primary);
+    background-color: var(--card);
+    color: #fff;
     border: 1px solid var(--border);
     padding: 13px 24px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
@@ -402,10 +404,15 @@ h3 {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .btn-secondary:hover {
-    background: var(--border);
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
 }
 
 .full-width {
@@ -419,57 +426,64 @@ h3 {
 .btn-text {
     background: none;
     border: none;
-    color: var(--text-secondary);
-    font-weight: 500;
+    color: var(--accent);
+    font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
     padding: 4px 0;
-    transition: color var(--transition);
+    transition: color var(--transition), text-shadow var(--transition);
 }
 
 .btn-text:hover {
-    color: var(--text-primary);
+    color: #fff;
+    text-shadow: 0 0 8px var(--accent-glow);
 }
 
 .btn-dashed {
     background: transparent;
     border: 1.5px dashed var(--border);
-    color: var(--text-secondary);
+    color: var(--muted);
     padding: 12px;
     border-radius: var(--radius-md);
     width: 100%;
     margin: 12px 0 0;
     cursor: pointer;
-    transition: border-color var(--transition), color var(--transition);
+    transition: border-color var(--transition), color var(--transition), box-shadow var(--transition);
     font-size: 0.9rem;
 }
 
 .btn-dashed:hover {
-    border-color: var(--text-primary);
-    color: var(--text-primary);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .btn-small {
-    background: var(--text-primary);
-    color: var(--bg-primary);
-    border: none;
+    background: var(--accent);
+    color: #000;
+    border: 1px solid var(--accent);
     padding: 10px 16px;
     border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
-    transition: opacity var(--transition);
+    transition: all var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .btn-small:hover {
-    opacity: 0.8;
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
 }
 
 .btn-danger-sm {
     background: transparent;
     border: 1px solid var(--border);
-    color: var(--danger);
+    color: var(--error);
     cursor: pointer;
     padding: 8px;
     border-radius: var(--radius-sm);
@@ -479,9 +493,10 @@ h3 {
 }
 
 .btn-danger-sm:hover {
-    background: var(--danger);
+    background: var(--error);
     color: #fff;
-    border-color: var(--danger);
+    border-color: var(--error);
+    box-shadow: 0 0 16px rgba(255, 0, 60, 0.5);
 }
 
 /* ============================================================
@@ -496,9 +511,10 @@ h3 {
 
 .badge {
     font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    background: var(--input-bg);
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(0, 225, 255, 0.1);
+    border: 1px solid rgba(0, 225, 255, 0.2);
     padding: 5px 12px;
     border-radius: var(--radius-pill);
 }
@@ -515,8 +531,8 @@ h3 {
 
 .btn-edit-person {
     background: var(--input-bg);
-    border: none;
-    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    color: var(--muted);
     cursor: pointer;
     padding: 6px;
     border-radius: 8px;
@@ -526,8 +542,10 @@ h3 {
 }
 
 .btn-edit-person:hover {
-    background: var(--border);
-    color: var(--text-primary);
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .pupusas-list {
@@ -543,19 +561,20 @@ h3 {
 
 .person-note-input {
     width: 100%;
-    background: var(--bg-card);
+    background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 12px 14px;
-    color: var(--text-primary);
+    color: #fff;
     font-size: 0.88rem;
     resize: none;
-    transition: border-color var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .person-note-input:focus {
     outline: none;
-    border-color: var(--text-secondary);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .person-note-input::placeholder {
@@ -572,13 +591,17 @@ h3 {
    PUPUSA ITEM CARD
    ============================================================ */
 .pupusa-item {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
+    background: var(--card);
+    border-radius: var(--radius-md);
     padding: 18px;
-    box-shadow: var(--shadow-sm);
     margin-bottom: 12px;
     border: 1px solid var(--border);
     animation: slideUp 0.25s ease-out;
+}
+
+.pupusa-item:hover {
+    background: var(--card-hover);
+    border-color: #333;
 }
 
 @keyframes slideUp {
@@ -616,17 +639,20 @@ h3 {
     width: 100%;
     appearance: none;
     background: var(--input-bg);
-    border: none;
-    color: var(--text-primary);
+    border: 1px solid var(--border);
+    color: #fff;
     font-size: 1rem;
     font-weight: 500;
     padding: 10px 36px 10px 12px;
     border-radius: var(--radius-sm);
     cursor: pointer;
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .specialty-select:focus {
     outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .chevron {
@@ -635,12 +661,13 @@ h3 {
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: var(--text-secondary);
+    color: var(--muted);
 }
 
 /* Dough Toggle */
 .dough-toggle {
     background: var(--input-bg);
+    border: 1px solid var(--border);
     padding: 3px;
     border-radius: var(--radius-sm);
     display: flex;
@@ -657,18 +684,18 @@ h3 {
 .dough-toggle span {
     display: block;
     padding: 7px 14px;
-    border-radius: 7px;
+    border-radius: 6px;
     font-size: 0.82rem;
     font-weight: 500;
-    color: var(--text-secondary);
+    color: var(--muted);
     transition: all var(--transition);
 }
 
 .dough-toggle input:checked+span {
-    background: var(--bg-card);
-    color: var(--text-primary);
-    box-shadow: var(--shadow-sm);
-    font-weight: 600;
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* Small Stepper */
@@ -676,6 +703,7 @@ h3 {
     display: flex;
     align-items: center;
     background: var(--input-bg);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 3px;
 }
@@ -685,18 +713,19 @@ h3 {
     height: 30px;
     border: none;
     background: transparent;
-    color: var(--text-primary);
+    color: #fff;
     font-size: 1.1rem;
     cursor: pointer;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background var(--transition);
+    transition: all var(--transition);
 }
 
 .stepper-btn-sm:hover {
-    background: var(--border);
+    background: var(--accent);
+    color: #000;
 }
 
 .input-qty {
@@ -704,7 +733,7 @@ h3 {
     border: none;
     background: transparent;
     text-align: center;
-    color: var(--text-primary);
+    color: #fff;
     font-weight: 700;
     font-size: 0.95rem;
 }
@@ -720,12 +749,13 @@ h3 {
     font-size: 1.4rem;
     cursor: pointer;
     padding: 0 4px;
-    transition: color var(--transition);
+    transition: color var(--transition), text-shadow var(--transition);
     line-height: 1;
 }
 
 .btn-remove:hover {
-    color: var(--danger);
+    color: var(--error);
+    text-shadow: 0 0 8px rgba(255, 0, 60, 0.5);
 }
 
 /* ============================================================
@@ -738,7 +768,7 @@ h3 {
 .summary-person-section {
     margin-bottom: 20px;
     padding-bottom: 16px;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border);
 }
 
 .summary-person-section:last-child {
@@ -753,27 +783,29 @@ h3 {
 }
 
 .summary-person-name {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.72rem;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--text-secondary);
+    color: var(--accent);
 }
 
 .summary-person-subtotal {
     font-size: 0.88rem;
     font-weight: 700;
-    color: var(--success);
+    color: var(--ok);
     letter-spacing: -0.3px;
+    text-shadow: 0 0 8px rgba(0, 255, 91, 0.3);
 }
 
 .person-item-name {
     flex: 1;
+    color: var(--ink);
 }
 
 .person-item-price {
     font-size: 0.82rem;
-    color: var(--text-secondary);
+    color: var(--muted);
     font-weight: 500;
     white-space: nowrap;
     margin-left: 8px;
@@ -793,20 +825,22 @@ h3 {
     justify-content: center;
     min-width: 26px;
     height: 26px;
-    background: var(--input-bg);
-    border-radius: 8px;
+    background: rgba(0, 225, 255, 0.1);
+    border: 1px solid rgba(0, 225, 255, 0.2);
+    border-radius: 6px;
     font-weight: 700;
     font-size: 0.85rem;
-    color: var(--text-primary);
+    color: var(--accent);
     flex-shrink: 0;
 }
 
 .summary-note {
     font-size: 0.82rem;
-    color: var(--text-secondary);
+    color: var(--muted);
     margin-top: 8px;
     padding: 8px 12px;
     background: var(--input-bg);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
 }
 
@@ -825,8 +859,9 @@ h3 {
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border);
     font-size: 0.95rem;
+    color: var(--ink);
 }
 
 .summary-item:last-child {
@@ -835,7 +870,7 @@ h3 {
 
 .summary-price {
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: var(--muted);
     font-weight: 500;
 }
 
@@ -847,18 +882,20 @@ h3 {
 }
 
 .grand-total-row {
-    border-top: 1.5px solid var(--border);
+    border-top: 1px solid var(--border);
     margin-top: 4px;
 }
 
 .money-total-row {
-    border-top: 1px solid var(--border-light);
+    border-top: 1px solid var(--border);
 }
 
 .total-label {
     font-size: 0.9rem;
-    color: var(--text-secondary);
-    font-weight: 500;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 .big-number {
@@ -866,11 +903,13 @@ h3 {
     font-weight: 700;
     letter-spacing: -1.5px;
     font-variant-numeric: tabular-nums;
+    color: #fff;
 }
 
 .money-big {
     font-size: 1.6rem;
-    color: var(--success);
+    color: var(--ok);
+    text-shadow: 0 0 12px rgba(0, 255, 91, 0.3);
 }
 
 .summary-actions {
@@ -899,27 +938,30 @@ h3 {
     padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    background: var(--bg-card);
-    color: var(--text-primary);
+    background: var(--card);
+    color: #fff;
     font-size: 0.9rem;
     min-width: 0;
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 #new-specialty-price {
     padding: 10px 10px;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    background: var(--bg-card);
-    color: var(--text-primary);
+    background: var(--card);
+    color: #fff;
     font-size: 0.9rem;
     width: 90px;
     min-width: 0;
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 #new-specialty-input:focus,
 #new-specialty-price:focus {
     outline: none;
-    border-color: var(--text-primary);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 #specialties-list {
@@ -934,7 +976,7 @@ h3 {
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border);
     gap: 12px;
 }
 
@@ -945,6 +987,7 @@ h3 {
 .specialty-name-text {
     flex: 1;
     font-size: 0.95rem;
+    color: var(--ink);
 }
 
 .specialty-controls {
@@ -957,22 +1000,23 @@ h3 {
     display: flex;
     align-items: center;
     background: var(--input-bg);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 0 8px;
     gap: 2px;
 }
 
 .price-symbol {
-    color: var(--text-secondary);
+    color: var(--accent);
     font-size: 0.82rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .price-inline-input {
     width: 56px;
     border: none;
     background: transparent;
-    color: var(--text-primary);
+    color: #fff;
     font-size: 0.88rem;
     font-weight: 500;
     padding: 7px 0;
@@ -991,11 +1035,12 @@ h3 {
     font-size: 1.3rem;
     line-height: 1;
     padding: 0 2px;
-    transition: color var(--transition);
+    transition: color var(--transition), text-shadow var(--transition);
 }
 
 .delete-specialty:hover {
-    color: var(--danger);
+    color: var(--error);
+    text-shadow: 0 0 8px rgba(255, 0, 60, 0.5);
 }
 
 /* ============================================================
@@ -1003,7 +1048,7 @@ h3 {
    ============================================================ */
 .saved-order-date {
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: var(--muted);
     margin-top: 4px;
     margin-bottom: 20px;
     text-transform: capitalize;
@@ -1024,7 +1069,7 @@ h3 {
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -1032,7 +1077,7 @@ h3 {
     padding: 20px;
     opacity: 0;
     transition: opacity 0.2s ease;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
 }
 
 .modal-overlay.active {
@@ -1040,12 +1085,13 @@ h3 {
 }
 
 .modal-card {
-    background: var(--bg-card);
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
     padding: 28px 24px 24px;
     width: 100%;
     max-width: 440px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 0 30px rgba(0, 225, 255, 0.1);
     animation: slideUpModal 0.25s ease-out;
 }
 
@@ -1065,6 +1111,7 @@ h3 {
     font-weight: 600;
     font-size: 1rem;
     margin-bottom: 14px;
+    color: #fff;
 }
 
 .modal-input {
@@ -1073,15 +1120,17 @@ h3 {
     background: var(--input-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    color: var(--text-primary);
+    color: #fff;
     font-size: 0.95rem;
     font-weight: 500;
     margin-bottom: 16px;
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .modal-input:focus {
     outline: none;
-    border-color: var(--text-primary);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .modal-actions {
@@ -1099,17 +1148,20 @@ h3 {
     bottom: 32px;
     left: 50%;
     transform: translateX(-50%) translateY(10px);
-    background: var(--text-primary);
-    color: var(--bg-primary);
+    background: var(--accent);
+    color: #000;
     padding: 10px 20px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 700;
     z-index: 2000;
     opacity: 0;
     transition: opacity 0.25s ease, transform 0.25s ease;
     white-space: nowrap;
     pointer-events: none;
+    box-shadow: 0 0 20px var(--accent-glow);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .toast.show {
@@ -1130,7 +1182,7 @@ h3 {
 
 .signature {
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--accent);
 }
 
 /* ============================================================
