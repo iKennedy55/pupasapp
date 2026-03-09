@@ -17,8 +17,13 @@ const DEFAULT_SPECIALTIES = [
 function loadSpecialties() {
     const saved = localStorage.getItem("specialties");
     if (saved) {
-        try { return JSON.parse(saved); }
-        catch (e) { /* corrupted */ }
+        try {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed)) return parsed;
+        } catch (e) {
+            console.warn("Specialties corrupted in localStorage, resetting.");
+            localStorage.removeItem("specialties");
+        }
     }
     return DEFAULT_SPECIALTIES.map(s => ({ ...s }));
 }
@@ -26,8 +31,13 @@ function loadSpecialties() {
 function loadSavedOrders() {
     const saved = localStorage.getItem("savedOrders");
     if (saved) {
-        try { return JSON.parse(saved); }
-        catch (e) { /* corrupted */ }
+        try {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed)) return parsed;
+        } catch (e) {
+            console.warn("SavedOrders corrupted in localStorage, resetting.");
+            localStorage.removeItem("savedOrders");
+        }
     }
     return [];
 }
@@ -497,6 +507,9 @@ function saveOrder() {
         showToast("Orden actualizada");
     } else {
         state.savedOrders.unshift(orderData);
+        if (state.savedOrders.length > 50) {
+            state.savedOrders = state.savedOrders.slice(0, 50);
+        }
         showToast("Orden guardada");
     }
 
