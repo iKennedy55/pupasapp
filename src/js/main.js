@@ -220,7 +220,7 @@ function addPupusaRow(existingItem = null) {
     };
     row.querySelector(".plus").onclick = () => {
         let val = parseInt(inputQty.value) || 0;
-        inputQty.value = val + 1;
+        if (val < 99) inputQty.value = val + 1;
     };
 
     ui.pupusasList.appendChild(row);
@@ -669,19 +669,30 @@ function renderOrdersHistory() {
 
 function addSpecialty() {
     const name = ui.newSpecialtyInput.value.trim();
-    const price = parseFloat(ui.newSpecialtyPrice.value) || 0;
+    const priceStr = String(ui.newSpecialtyPrice.value).replace(/[^0-9]/g, '');
+    const price = priceStr ? parseInt(priceStr) / 100 : 0;
 
-    if (name && !state.specialties.find(s => s.name.toLowerCase() === name.toLowerCase())) {
-        state.specialties.push({ name, price });
-        ui.newSpecialtyInput.value = "";
-        ui.newSpecialtyPrice.value = "";
+    if (!name) {
+        showToast("Escribe un nombre");
+        return;
+    }
+
+    const existing = state.specialties.find(s => s.name.toLowerCase() === name.toLowerCase());
+
+    if (existing) {
+        existing.price = price;
         saveSpecialties();
         renderSpecialtiesList();
-        showToast("Especialidad agregada");
-    } else if (!name) {
-        showToast("Escribe un nombre");
+        ui.newSpecialtyInput.value = "";
+        ui.newSpecialtyPrice.value = "";
+        showToast("Precio actualizado");
     } else {
-        showToast("Ya existe esa especialidad");
+        state.specialties.push({ name, price });
+        saveSpecialties();
+        renderSpecialtiesList();
+        ui.newSpecialtyInput.value = "";
+        ui.newSpecialtyPrice.value = "";
+        showToast("Especialidad agregada");
     }
 }
 
@@ -709,13 +720,24 @@ function renderSpecialtiesList() {
             <div class="specialty-controls">
                 <div class="price-input-wrapper">
                     <span class="price-symbol">$</span>
-                    <input type="number" class="price-inline-input" value="${s.price.toFixed(2)}" min="0" step="0.25" data-name="${s.name}">
+                    <input type="text" inputmode="numeric" class="price-inline-input" value="${s.price.toFixed(2)}" data-name="${s.name}">
                 </div>
                 <button class="delete-specialty" data-name="${s.name}">x</button>
             </div>
         `;
-        li.querySelector(".price-inline-input").addEventListener("change", (e) => {
-            updateSpecialtyPrice(s.name, e.target.value);
+        const priceInput = li.querySelector(".price-inline-input");
+        priceInput.addEventListener("input", (e) => {
+            let val = String(e.target.value).replace(/[^0-9]/g, '');
+            if (!val) {
+                e.target.value = "";
+                updateSpecialtyPrice(s.name, 0);
+                return;
+            }
+            let cents = parseInt(val) || 0;
+            if (cents > 1000) cents = 1000;
+            const formatted = (cents / 100).toFixed(2);
+            e.target.value = formatted;
+            updateSpecialtyPrice(s.name, cents / 100);
         });
         li.querySelector(".delete-specialty").addEventListener("click", () => {
             removeSpecialty(s.name);
@@ -738,6 +760,16 @@ function init() {
     });
     ui.btnAddSpecialty.addEventListener("click", addSpecialty);
     ui.newSpecialtyInput.addEventListener("keydown", (e) => { if (e.key === "Enter") addSpecialty(); });
+    ui.newSpecialtyPrice.addEventListener("input", (e) => {
+        let val = String(e.target.value).replace(/[^0-9]/g, '');
+        if (!val) {
+            e.target.value = "";
+            return;
+        }
+        let cents = parseInt(val) || 0;
+        if (cents > 1000) cents = 1000;
+        e.target.value = (cents / 100).toFixed(2);
+    });
 
     // home
     ui.btnNewOrder.addEventListener("click", () => {
