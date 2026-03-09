@@ -160,7 +160,13 @@ function init() {
     ui.newSpecialtyInput.addEventListener("keydown", (e) => { if (e.key === "Enter") addSpecialty(); });
 
     // Home
-    ui.btnNewOrder.addEventListener("click", () => switchView("name"));
+    ui.btnNewOrder.addEventListener("click", () => {
+        // Reset fields for a fresh order
+        ui.orderNameInput.value = "";
+        state.totalPeople = 1;
+        ui.peopleDisplay.textContent = "1";
+        switchView("name");
+    });
 
     // Name view
     ui.btnStart.addEventListener("click", startOrder);
@@ -198,6 +204,7 @@ function init() {
 // VIEW UTILS
 // ============================================================
 let _currentView = "home";
+let _switchId = 0;
 
 function currentViewName() {
     return _currentView;
@@ -205,15 +212,26 @@ function currentViewName() {
 
 function switchView(viewName) {
     _currentView = viewName;
+    const id = ++_switchId;
+
+    // Immediately hide all views
     Object.values(views).forEach(el => {
         el.classList.remove("active");
         el.classList.add("hidden");
     });
+
+    // Double rAF to ensure the browser has painted the hidden state
     requestAnimationFrame(() => {
-        const target = views[viewName];
-        target.classList.remove("hidden");
-        void target.offsetWidth;
-        target.classList.add("active");
+        if (id !== _switchId) return; // stale call, skip
+        requestAnimationFrame(() => {
+            if (id !== _switchId) return; // stale call, skip
+            const target = views[viewName];
+            if (!target) return;
+            target.classList.remove("hidden");
+            // Force reflow so the transition from opacity:0 actually runs
+            void target.offsetWidth;
+            target.classList.add("active");
+        });
     });
 }
 
