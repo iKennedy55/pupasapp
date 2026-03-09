@@ -16,8 +16,8 @@
     --warn: #ffea00;
     --error: #ff003c;
     --danger: #ff003c;
-    --accent: #00e1ff;
-    --accent-glow: rgba(0, 225, 255, 0.6);
+    --accent: #ffffff;
+    --accent-glow: rgba(255, 255, 255, 0.45);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
@@ -84,7 +84,7 @@ body {
 }
 
 .logo-dot {
-    color: var(--accent);
+    color: var(--muted);
 }
 
 .header-right {
@@ -160,7 +160,7 @@ h3 {
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--muted);
     margin-bottom: 12px;
 }
 
@@ -426,7 +426,7 @@ h3 {
 .btn-text {
     background: none;
     border: none;
-    color: var(--accent);
+    color: var(--muted);
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
@@ -512,9 +512,9 @@ h3 {
 .badge {
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--accent);
-    background: rgba(0, 225, 255, 0.1);
-    border: 1px solid rgba(0, 225, 255, 0.2);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     padding: 5px 12px;
     border-radius: var(--radius-pill);
 }
@@ -787,7 +787,7 @@ h3 {
     font-size: 0.72rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: #fff;
 }
 
 .summary-person-subtotal {
@@ -825,12 +825,12 @@ h3 {
     justify-content: center;
     min-width: 26px;
     height: 26px;
-    background: rgba(0, 225, 255, 0.1);
-    border: 1px solid rgba(0, 225, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 6px;
     font-weight: 700;
     font-size: 0.85rem;
-    color: var(--accent);
+    color: #fff;
     flex-shrink: 0;
 }
 
@@ -1007,7 +1007,7 @@ h3 {
 }
 
 .price-symbol {
-    color: var(--accent);
+    color: var(--muted);
     font-size: 0.82rem;
     font-weight: 700;
 }
@@ -1091,7 +1091,7 @@ h3 {
     padding: 28px 24px 24px;
     width: 100%;
     max-width: 440px;
-    box-shadow: 0 0 30px rgba(0, 225, 255, 0.1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
     animation: slideUpModal 0.25s ease-out;
 }
 
@@ -1182,7 +1182,7 @@ h3 {
 
 .signature {
     font-weight: 600;
-    color: var(--accent);
+    color: var(--muted);
 }
 
 /* ============================================================
