@@ -765,8 +765,10 @@ function init() {
 
     // settings
     ui.btnOpenSettings.addEventListener("click", () => {
-        state._settingsReturnView = currentViewName();
-        switchView("settings");
+        if (currentViewName() !== "settings") {
+            state._settingsReturnView = currentViewName();
+            switchView("settings");
+        }
     });
     ui.btnCloseSettings.addEventListener("click", () => {
         switchView(state._settingsReturnView || "home");
