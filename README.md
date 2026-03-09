@@ -1,52 +1,49 @@
 # pupusas.beta
 
-Minimal ordering app for pupusas. Handles multiple named orders, per-person tracking, specialty pricing, and order history with localStorage persistence.
+## Descripción
+Una aplicación web minimalista diseñada para tomar pedidos de pupusas de forma rápida, organizar órdenes por persona y calcular subtotales y totales automáticamente. 
 
-## Tech Stack
+## Objetivo
+Eliminar la complejidad de tomar órdenes compartidas en papel o aplicaciones de mensajería, ofreciendo una interfaz limpia (modo oscuro OLED) y rápida que funcione completamente offline en cualquier dispositivo.
 
-- HTML, CSS, JavaScript (ES modules)
-- No frameworks, no build tools
-- localStorage for persistence
+## Tecnologías (Tech Stack)
+- **HTML5** (Estructura semántica)
+- **CSS3 Vanilla** (Módulos separados, variables CSS, animaciones sin dependencias)
+- **JavaScript Moderno** (ES6+, sin compiladores ni frameworks pesados)
+- **Web Storage API** (`localStorage` para persistencia de datos)
 
-## Folder Structure
-
-```
-pupusas/
+## Estructura del Proyecto
+```text
+pupusas-app/
 ├── README.md
 ├── .gitignore
-├── src/
-│   ├── index.html
-│   ├── css/
-│   │   ├── variables.css
-│   │   ├── base.css
-│   │   ├── components.css
-│   │   ├── utilities.css
-│   │   └── main.css
-│   └── js/
-│       ├── main.js
-│       └── modules/
-│           ├── state.js
-│           ├── views.js
-│           ├── order.js
-│           ├── summary.js
-│           ├── settings.js
-│           └── toast.js
-└── legacy/
-    └── pupusas_counter.py
+└── src/
+    ├── index.html
+    ├── css/
+    │   ├── variables.css
+    │   ├── base.css
+    │   ├── components.css
+    │   └── utilities.css
+    └── js/
+        └── main.js
 ```
 
-## Usage
+## Instalación
+El proyecto no requiere procesos de compilación (build steps) ni dependencias externas (Node.js/NPM).
 
-Serve `src/` with any local server:
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/iKennedy55/pupasapp.git
+   ```
+2. No es necesario instalar nada más.
 
-```bash
-npx serve src
-```
+## Uso
+1. Navega a la carpeta `src/`.
+2. Abre el archivo `index.html` haciendo doble clic para cargarlo directamente en tu navegador web preferido.
+3. Comienza creando una "Nueva Orden", establece la cantidad de personas y selecciona las especialidades de pupusas para cada una.
+4. Usa el área de ajustes (ícono superior derecho) para editar o agregar especialidades y sus precios.
 
-Or use VS Code Live Server pointed at `src/index.html`.
-
-## Notes
-
-- ES modules require a local server (`file://` protocol won't work)
-- All data persists in `localStorage`
-- `legacy/` contains the original CLI version in Python
+## Notas y Limitaciones
+- **Persistencia de Datos:** Toda la información (órdenes guardadas, especialidades customizadas) se guarda localmente en el navegador usando `localStorage`. Si borras los datos de navegación o usas modo incógnito, perderás esta información.
+- **Sincronización:** Debido a su naturaleza *Client-Side offline*, no hay cuentas de usuario ni sincronización en la nube entre diferentes dispositivos.
+- **Ejecución Local:** La app está diseñada para funcionar mediante el protocolo `file://` (doble clic) para máxima simplicidad.
