@@ -1,0 +1,26 @@
+:root {
+    --ink: #e0e0e0;
+    --muted: #888888;
+    --border: #1a1a1a;
+    --bg: #000000;
+    --card: #000000;
+    --card-hover: #080808;
+    --input-bg: #0a0a0a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #888888;
+    --text-tertiary: #555555;
+    --ok: #00ff5b;
+    --warn: #ffea00;
+    --error: #ff003c;
+    --danger: #ff003c;
+    --accent: #ffffff;
+    --accent-glow: rgba(255, 255, 255, 0.45);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 50px;
+    --transition: 0.2s ease;
+}

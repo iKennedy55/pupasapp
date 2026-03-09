@@ -1,0 +1,11 @@
+.hidden {
+    display: none !important;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.flex-1 {
+    flex: 1;
+}
